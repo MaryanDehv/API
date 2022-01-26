@@ -5,7 +5,6 @@ module.exports = gql`
     input RegisterInput{
         user: String!,
         email:String!,
-        image: String!,
         password: String!,
         confirmPassword: String!
     },
@@ -50,6 +49,7 @@ module.exports = gql`
     },
     type Query{ 
         getUsers: [User]!
+        getUser(user: String): User!
         getProducts: [Product]!
         getComments: [Comment]!
         getRecentActions: [UserActions]!

@@ -26,9 +26,14 @@ module.exports = {
             const users = await User.find();
             return users;
         },
+        async getUser(_,{user}){
+            const users = await User.findOne({user: user})
+
+            return users;
+        }
     } ,
     Mutation:{
-        async registerUser(_,{registerInput: {user, email, password, image, confirmPassword}} , context,info){
+        async registerUser(_,{registerInput: {user, email, password, confirmPassword}} , context,info){
 
             const {error , valid} = registerValidator(user, email, password, confirmPassword);
             
@@ -42,7 +47,6 @@ module.exports = {
             const newUser = new User({
                 user,
                 email,
-                image,
                 password,
                 createdAt: new Date().toISOString()
             });
@@ -60,11 +64,11 @@ module.exports = {
             
         } ,
         async login(_, {username , password}){
-            const user = await User.findOne({username});
-
+            const user = await User.findOne({user: username});
             const match = await bcryptjs.compare(password , user.password);
-
             const res = await user.save();
+
+            console.log(user);
 
             if(match){
                 const token = sign(res);
