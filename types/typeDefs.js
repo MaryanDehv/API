@@ -22,7 +22,7 @@ module.exports = gql`
         user: String!,
         email: String!,
         token: String!,
-        image: String!,
+        image: String,
         createdAt: String!
     },
     type Actions{
